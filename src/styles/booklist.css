@@ -1,0 +1,49 @@
+.home-book-container {
+  margin: 10px auto;
+  background-color: rgb(235, 235, 235);
+  padding: 20px;
+}
+
+.book-container {
+  height: max-content;
+  margin: 10 15px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 15px;
+}
+
+.sec-title {
+  margin: 26px;
+  color: rgb(88, 88, 88);
+}
+
+.sec-title span {
+  text-transform: capitalize;
+}
+
+@media (max-width: 900px) {
+  .book-container {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0;
+  }
+
+  .home-book-container {
+    margin-top: 30px;
+  }
+
+  .sec-title {
+    margin: 20px 0;
+  }
+}
+
+@media (min-width: 900px) {
+  .book-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .book-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

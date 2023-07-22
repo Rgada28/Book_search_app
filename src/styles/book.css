@@ -1,0 +1,16 @@
+.book-card {
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  border: 2px solid grey;
+  border-radius: 4px;
+  background-color: rgb(255, 255, 255);
+}
+
+.book-card p {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 8px 0;
+}
