@@ -2,9 +2,9 @@ import {
     BOOK_LIST_REQUEST,
     BOOK_LIST_FAIL,
     BOOK_LIST_SUCCESS,
-    BOOK_DETAILS_REQUEST,
-    BOOK_DETAILS_FAIL,
-    BOOK_DETAILS_SUCCESS,
+    ADD_BOOK_REQUEST,
+    BOOK_ADD_SUCCESS,
+    BOOK_ADD_FAIL
 } from "../constants/BookConstants";
 
 export const bookListReducer = (state = {
@@ -35,25 +35,38 @@ export const bookListReducer = (state = {
 }
 
 
-
-export const bookDetailsReducer = (state = { loading: true, book: {} }, action) => {
+export const addBookReducer = (state = {}, action) => {
     switch (action.type) {
-
-        case BOOK_DETAILS_REQUEST:
+        case ADD_BOOK_REQUEST:
             return { loading: true };
-
-        case BOOK_DETAILS_SUCCESS:
-            console.log(action.payload.count)
-            return {
-                loading: false,
-                book: action.payload
-            };
-        case BOOK_DETAILS_FAIL:
+        case BOOK_ADD_SUCCESS:
+            return { loading: false, book: action.payload };
+        case BOOK_ADD_FAIL:
             return { loading: false, error: action.payload };
-
         default:
             return state;
-
-
     }
 }
+
+
+// export const bookDetailsReducer = (state = { loading: true, book: {} }, action) => {
+//     switch (action.type) {
+
+//         case BOOK_DETAILS_REQUEST:
+//             return { loading: true };
+
+//         case BOOK_DETAILS_SUCCESS:
+//             console.log(action.payload.count)
+//             return {
+//                 loading: false,
+//                 book: action.payload
+//             };
+//         case BOOK_DETAILS_FAIL:
+//             return { loading: false, error: action.payload };
+
+//         default:
+//             return state;
+
+
+//     }
+// }

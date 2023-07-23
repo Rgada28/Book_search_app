@@ -5,9 +5,14 @@ import {
     BOOK_LIST_SUCCESS,
     BOOK_DETAILS_REQUEST,
     BOOK_DETAILS_FAIL,
-    BOOK_DETAILS_SUCCESS
+    BOOK_DETAILS_SUCCESS,
+    ADD_BOOK_REQUEST,
+    BOOK_ADD_SUCCESS,
+    BOOK_ADD_FAIL
 
 } from "../constants/BookConstants";
+
+const Swal = require('sweetalert2');
 
 export const listBooks = (page) => async (dispatch) => {
     dispatch({
@@ -80,3 +85,78 @@ export const searchBook = (queryString) => async (dispatch) => {
         });
     }
 };
+
+
+
+export const addBook = ({ author, country, language, link, pages, title, year }) => async (dispatch) => {
+
+    dispatch({
+        type: ADD_BOOK_REQUEST,
+        payload: { author, country, language, link, pages, title, year }
+    });
+    try {
+        var book = {
+            author: author,
+            country: country,
+            language: language,
+            link: link,
+            pages: pages,
+            title: title,
+            year: year,
+        }
+        Swal.showLoading();
+        Swal.fire({
+            title: 'Please Wait !',
+            html: 'data uploading',// add html attribute if you want or remove
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading(
+                )
+            },
+        });
+        setTimeout(async () => {
+            // const { data } = 
+            await api.post('/books', book, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(data => {
+                dispatch({
+                    type: BOOK_ADD_SUCCESS,
+                    payload: data
+                });
+                Swal.fire({
+                    title: "Book Added Successfully",
+                    icon: "success",
+                    showConfirmButton: true,
+                });
+            }).catch(error => {
+                Swal.fire({
+                    title: "Failed to add Book",
+                    text: "Please try again later",
+                    icon: "error",
+                });
+                dispatch({
+                    type: BOOK_ADD_FAIL,
+                    payload:
+                        error.response && error.response.data.message
+                            ? error.response.data.message
+                            : error.message,
+                });
+            });
+        }, 4000);
+
+    }
+    catch (error) {
+        Swal.close();
+        dispatch({
+            type: BOOK_ADD_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+
+    }
+}

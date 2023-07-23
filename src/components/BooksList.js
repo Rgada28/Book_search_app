@@ -48,11 +48,13 @@ const BooksList = () => {
                         (
                             <>
                                 <div className="book-container">
-                                    {books.data.map((book) => {
-                                        return (
-                                            <Book key={book.id} book={book} />
-                                        )
-                                    })
+                                    {
+                                        // books.data ? <h1>No Books founds</h1> :
+                                        books.data.map((book) => {
+                                            return (
+                                                <Book key={book.id} book={book} />
+                                            )
+                                        })
                                     }
                                 </div>
                             </>
@@ -61,9 +63,9 @@ const BooksList = () => {
                 <div>
                     {pagination != null ?
                         <div>
-                            <button disable={pagination.currentPage === 1} onClick={() => goToPreviousPage(pagination)}>Previous</button>
+                            <button onClick={() => goToPreviousPage(pagination)}>Previous</button>
                             <span>Page {pagination.currentPage} of {pagination.totalPages}</span>
-                            <button disable={pagination.currentPage === pagination.totalPages} onClick={() => goToNextPage(pagination)}>Next</button>
+                            <button onClick={() => goToNextPage(pagination)}>Next</button>
                         </div> : null}
 
                 </div>
