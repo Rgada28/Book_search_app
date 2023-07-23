@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import Book from './Book';
 import '../styles/booklist.css'
 import { useSelector, useDispatch } from 'react-redux'
@@ -15,17 +15,16 @@ const BooksList = () => {
     const { loading, error, books, pagination } = bookList;
 
     useEffect(() => {
-        console.log("inside useEffect" + JSON.stringify(pagination));
         dispatch(listBooks(1));
     }, [dispatch])
 
     const handleEdit = (bookId) => {
-
+        //TODO add SweetAlter and send data
     };
 
     const goToPreviousPage = (pagination) => {
         var page = pagination.currentPage;
-        if (page != 1) {
+        if (page !== 1) {
             page = pagination.currentPage - 1;
         }
         dispatch(listBooks(page));
@@ -62,9 +61,9 @@ const BooksList = () => {
                 <div>
                     {pagination != null ?
                         <div>
-                            <button disable={pagination.currentPage == 1} onClick={() => goToPreviousPage(pagination)}>Previous</button>
-                            <span>Page {pagination.currentPage} of {pagination.totalPages}</span> : null
-                            <button disable={pagination.currentPage == pagination.totalPages} onClick={() => goToNextPage(pagination)}>Next</button>
+                            <button disable={pagination.currentPage === 1} onClick={() => goToPreviousPage(pagination)}>Previous</button>
+                            <span>Page {pagination.currentPage} of {pagination.totalPages}</span>
+                            <button disable={pagination.currentPage === pagination.totalPages} onClick={() => goToNextPage(pagination)}>Next</button>
                         </div> : null}
 
                 </div>

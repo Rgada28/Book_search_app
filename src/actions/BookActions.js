@@ -55,3 +55,28 @@ export const detailsBook = (BookID) => async (dispatch) => {
         });
     }
 };
+
+export const searchBook = (queryString) => async (dispatch) => {
+    dispatch({
+        type: BOOK_LIST_REQUEST,
+        payload: queryString
+    });
+
+    try {
+        const { data } = await api.get(`/books/?title=${queryString}`);
+
+        dispatch({
+            type: BOOK_LIST_SUCCESS,
+            data: data,
+            pagination: data.pagination
+        });
+    }
+    catch (error) {
+        dispatch({
+            type: BOOK_LIST_FAIL,
+            payload: error.response && error.response.data.mesaage
+                ? error.response.data.message
+                : error.message,
+        });
+    }
+};

@@ -1,33 +1,22 @@
-import axios from 'axios';
+import { searchBook } from "../actions/BookActions";
+import { useDispatch } from 'react-redux'
 import React, { useState } from 'react';
 
+
 const Navbar = () => {
-    const [searchResults, setSearchResults] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [pagination, setPagination] = useState({
-        sortDirection: '',
-        totalPages: 0,
-        pageSize: 0,
-        currentPage: 0,
-        totalElements: 0,
-    });
+
     const handleChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
+    const dispatch = useDispatch();
 
-
-    const handleSearch = (query) => {
-        axios
-            .get(`http://68.178.162.203:8080/application-test-v1.1/books?title=${query}`)
-            .then((response) => {
-                setSearchResults(response.data.data);
-                setPagination(response.data.pagination);
-            })
-            .catch((error) => {
-                console.error('Error fetching search results:', error);
-            });
-    };
+    const handleSearch = () => {
+        if (searchQuery !== null && searchQuery !== "") {
+            dispatch(searchBook(searchQuery));
+        }
+    }
 
     return (
 
@@ -44,15 +33,15 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto text-nowrap">
                         <li className="nav-item my-1 active">
-                            <a className="nav-link active" href="#">Add Book</a>
+                            <a className="nav-link active" href="/addBook">Add Book</a>
                         </li>
                     </ul>
                 </div>
             </ul>
             <div className="input-group me-2 mb-2 mt-2">
-                <input className="form-control form-control-dark" type="text" placeholder="Enter book Title..." aria-label="Search" />
+                <input className="form-control form-control-dark" onChange={handleChange} value={searchQuery} type="text" placeholder="Enter book Title..." aria-label="Search" />
                 <div className="input-group-append">
-                    <button className=" ms-2 btn btn-success btn-outline-light" type="submit">Search<i className="fa fa-search"></i></button>
+                    <button className=" ms-2 btn btn-success btn-outline-light" onClick={handleSearch} type="submit">Search<i className="fa fa-search"></i></button>
                 </div>
             </div>
         </nav>

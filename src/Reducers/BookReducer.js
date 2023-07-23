@@ -4,8 +4,7 @@ import {
     BOOK_LIST_SUCCESS,
     BOOK_DETAILS_REQUEST,
     BOOK_DETAILS_FAIL,
-    BOOK_DETAILS_SUCCESS
-
+    BOOK_DETAILS_SUCCESS,
 } from "../constants/BookConstants";
 
 export const bookListReducer = (state = {
