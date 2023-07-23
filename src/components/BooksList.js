@@ -41,6 +41,15 @@ const BooksList = () => {
     return (
         <div>
             <div className="home-book-container">
+                <div className='mt-5 d-flex justify-content-center' >
+                    {pagination != null ?
+                        <div>
+                            <button onClick={() => goToPreviousPage(pagination)}>Previous</button>
+                            <span className='ms-2 me-2'>Page <b>{pagination.currentPage}</b> of <b>{pagination.totalPages}</b></span>
+                            <button onClick={() => goToNextPage(pagination)}>Next</button>
+                        </div> : null}
+
+                </div>
                 {loading ? <LoadingBox />
                     :
                     error ? <MessageBox variant="danger">{error}</MessageBox>
@@ -60,11 +69,11 @@ const BooksList = () => {
                             </>
                         )
                 }
-                <div>
+                <div className='mt-5 d-flex justify-content-center' >
                     {pagination != null ?
                         <div>
                             <button onClick={() => goToPreviousPage(pagination)}>Previous</button>
-                            <span>Page {pagination.currentPage} of {pagination.totalPages}</span>
+                            <span className='ms-2 me-2'>Page <b>{pagination.currentPage}</b> of <b>{pagination.totalPages}</b></span>
                             <button onClick={() => goToNextPage(pagination)}>Next</button>
                         </div> : null}
 

@@ -1,16 +1,18 @@
 .book-card {
-  display: flex;
-  margin: auto;
+  display: block;
+  height: 100%;
+  position: relative;
+  text-align: center;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 16px;
   border: 2px solid grey;
   border-radius: 4px;
   background-color: rgb(255, 255, 255);
 }
+/* * {
+  border: 2px solid rgb(64, 83, 170);
+  border-radius: 4px;
+} */
 
-.book-card p {
-  font-size: 22px;
-  font-weight: 600;
-  margin: 8px 0;
+.edit-btn {
+  padding: 5px 5px;
 }

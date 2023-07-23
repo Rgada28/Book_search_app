@@ -1,5 +1,8 @@
 import React from 'react'
 import '../styles/book.css'
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
 
 const handleEditBook = (bookId) => {
 
@@ -8,28 +11,20 @@ const handleEditBook = (bookId) => {
 const Book = ({ book }) => {
 
     return (
-        <div >
-            <div className="book-card" >
-                <h2  >{book.title}</h2>
-                <div className="container text-center">
-                    <div className="row align-items-start">
-                        <div className="col">
-                            <p>Author : {book.author}</p>
-                        </div>
-                        <div className="col">
-                            <p >Year : {book.year}</p>
-                        </div>
-                        <div className="col">
-                            <p >{book.language}</p>
-                        </div>
-                        <div className="col">
-                            <button onClick={() => handleEditBook(book.id)}>Edit</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        <Card className='border-1 border-dark' style={{ width: '18rem' }}>
+            <Card.Body className='d-flex justify-content-center'>
+                <Card.Title ><a href={book.link} >{book.title}</a></Card.Title>
+            </Card.Body>
+            <ListGroup className="list-group-flush">
+                <ListGroup.Item>Author: {book.author}</ListGroup.Item>
+                <ListGroup.Item>Pages: {book.pages}</ListGroup.Item>
+                <ListGroup.Item>Year: {book.year}</ListGroup.Item>
+                <ListGroup.Item>Language: {book.language}</ListGroup.Item>
+            </ListGroup>
+            <Card.Body>
+                <Button variant="primary">Edit</Button>
+            </Card.Body>
+        </Card>
     )
 }
 
