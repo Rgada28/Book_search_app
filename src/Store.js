@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { bookListReducer, bookDetailsReducer, addBookReducer } from './Reducers/BookReducer';
+import { bookListReducer, updateBookReducer, addBookReducer } from './Reducers/BookReducer';
 
 const initialState = {
 
@@ -8,7 +8,8 @@ const initialState = {
 const reducer = combineReducers({
     bookList: bookListReducer,
     // bookdetails: bookDetailsReducer,
-    addBookReducer: addBookReducer
+    addBookReducer: addBookReducer,
+    book: updateBookReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -18,9 +18,7 @@ const BooksList = () => {
         dispatch(listBooks(1));
     }, [dispatch])
 
-    const handleEdit = (bookId) => {
-        //TODO add SweetAlter and send data
-    };
+
 
     const goToPreviousPage = (pagination) => {
         var page = pagination.currentPage;
@@ -29,7 +27,9 @@ const BooksList = () => {
         }
         dispatch(listBooks(page));
     }
+    const sortBooksByAsc = () => {
 
+    }
     const goToNextPage = (pagination) => {
         var page = pagination.currentPage;
         if (page < pagination.totalPages) {
@@ -41,10 +41,10 @@ const BooksList = () => {
     return (
         <div>
             <div className="home-book-container">
-                <div className='mt-5 d-flex justify-content-center' >
+                <div className='me-2 mt-2 mb-5 d-flex justify-content-end' >
                     {pagination != null ?
                         <div>
-                            <button onClick={() => goToPreviousPage(pagination)}>Previous</button>
+                            <button onClick={sortBooksByAsc}>Sort Title</button>
                             <span className='ms-2 me-2'>Page <b>{pagination.currentPage}</b> of <b>{pagination.totalPages}</b></span>
                             <button onClick={() => goToNextPage(pagination)}>Next</button>
                         </div> : null}
@@ -59,9 +59,11 @@ const BooksList = () => {
                                 <div className="book-container">
                                     {
                                         // books.data ? <h1>No Books founds</h1> :
-                                        books.data.map((book) => {
+                                        books.data.map((book, index) => {
                                             return (
-                                                <Book key={book.id} book={book} />
+                                                <div key={index}>
+                                                    <Book book={book} />
+                                                </div>
                                             )
                                         })
                                     }
@@ -72,9 +74,9 @@ const BooksList = () => {
                 <div className='mt-5 d-flex justify-content-center' >
                     {pagination != null ?
                         <div>
-                            <button onClick={() => goToPreviousPage(pagination)}>Previous</button>
+                            {pagination.currentPage !== 1 ? <button className='btn btn-warning' onClick={() => goToPreviousPage(pagination)}>Previous</button> : null}
                             <span className='ms-2 me-2'>Page <b>{pagination.currentPage}</b> of <b>{pagination.totalPages}</b></span>
-                            <button onClick={() => goToNextPage(pagination)}>Next</button>
+                            {pagination.currentPage !== pagination.totalPages ? <button className='btn btn-warning' onClick={() => goToNextPage(pagination)}>Next</button> : null}
                         </div> : null}
 
                 </div>

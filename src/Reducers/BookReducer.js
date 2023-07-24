@@ -34,6 +34,25 @@ export const bookListReducer = (state = {
     }
 }
 
+export const updateBookReducer = (state = {
+    loading: true, book: {}
+}, action) => {
+    switch (action.type) {
+
+        case ADD_BOOK_REQUEST:
+            return { loading: true };
+
+        case BOOK_ADD_SUCCESS:
+            return { loading: false, book: action.data };
+
+        case BOOK_ADD_FAIL:
+            return { loading: false, error: action.data };
+
+        default:
+            return state;
+    }
+}
+
 
 export const addBookReducer = (state = {}, action) => {
     switch (action.type) {
@@ -47,26 +66,3 @@ export const addBookReducer = (state = {}, action) => {
             return state;
     }
 }
-
-
-// export const bookDetailsReducer = (state = { loading: true, book: {} }, action) => {
-//     switch (action.type) {
-
-//         case BOOK_DETAILS_REQUEST:
-//             return { loading: true };
-
-//         case BOOK_DETAILS_SUCCESS:
-//             console.log(action.payload.count)
-//             return {
-//                 loading: false,
-//                 book: action.payload
-//             };
-//         case BOOK_DETAILS_FAIL:
-//             return { loading: false, error: action.payload };
-
-//         default:
-//             return state;
-
-
-//     }
-// }

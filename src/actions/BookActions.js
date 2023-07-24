@@ -3,9 +3,6 @@ import {
     BOOK_LIST_REQUEST,
     BOOK_LIST_FAIL,
     BOOK_LIST_SUCCESS,
-    BOOK_DETAILS_REQUEST,
-    BOOK_DETAILS_FAIL,
-    BOOK_DETAILS_SUCCESS,
     ADD_BOOK_REQUEST,
     BOOK_ADD_SUCCESS,
     BOOK_ADD_FAIL
@@ -34,32 +31,6 @@ export const listBooks = (page) => async (dispatch) => {
         })
     }
 }
-
-
-
-export const detailsBook = (BookID) => async (dispatch) => {
-    dispatch({
-        type: BOOK_DETAILS_REQUEST,
-        payload: BookID
-    });
-
-    try {
-        const { data } = await api.get(`/books/${BookID}`);
-
-        dispatch({
-            type: BOOK_DETAILS_SUCCESS,
-            payload: data
-        })
-    }
-    catch (error) {
-        dispatch({
-            type: BOOK_DETAILS_FAIL,
-            payload: error.response && error.response.data.mesaage
-                ? error.response.data.message
-                : error.message,
-        });
-    }
-};
 
 export const searchBook = (queryString) => async (dispatch) => {
     dispatch({
@@ -115,37 +86,101 @@ export const addBook = ({ author, country, language, link, pages, title, year })
                 )
             },
         });
-        setTimeout(async () => {
-            // const { data } = 
-            await api.post('/books', book, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then(data => {
-                dispatch({
-                    type: BOOK_ADD_SUCCESS,
-                    payload: data
-                });
-                Swal.fire({
-                    title: "Book Added Successfully",
-                    icon: "success",
-                    showConfirmButton: true,
-                });
-            }).catch(error => {
-                Swal.fire({
-                    title: "Failed to add Book",
-                    text: "Please try again later",
-                    icon: "error",
-                });
-                dispatch({
-                    type: BOOK_ADD_FAIL,
-                    payload:
-                        error.response && error.response.data.message
-                            ? error.response.data.message
-                            : error.message,
-                });
+        // setTimeout(async () => {
+        // const { data } = 
+        await api.post('/books', book, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(data => {
+            dispatch({
+                type: BOOK_ADD_SUCCESS,
+                payload: data
             });
-        }, 4000);
+            Swal.fire({
+                title: "Book Added Successfully",
+                icon: "success",
+                showConfirmButton: true,
+            });
+        }).catch(error => {
+            Swal.fire({
+                title: "Failed to add Book",
+                text: "Please try again later",
+                icon: "error",
+            });
+            dispatch({
+                type: BOOK_ADD_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
+        });
+        // }, 4000);
+
+    }
+    catch (error) {
+        Swal.close();
+        dispatch({
+            type: BOOK_ADD_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+
+    }
+}
+
+export const updateBook = (book) => async (dispatch) => {
+
+    dispatch({
+        type: ADD_BOOK_REQUEST,
+        payload: book
+    });
+
+    try {
+        Swal.showLoading();
+        Swal.fire({
+            title: 'Please Wait !',
+            html: 'data uploading',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                Swal.showLoading(
+                )
+            },
+        });
+        // setTimeout(async () => {
+        await api.put(`/books/${book.id}`, book, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(data => {
+            dispatch({
+                type: BOOK_ADD_SUCCESS,
+                payload: data
+            });
+            Swal.fire({
+                title: "Book Updated Successfully",
+                icon: "success",
+                showConfirmButton: true,
+            });
+        }).catch(error => {
+            Swal.fire({
+                title: "Failed to Update Book",
+                text: "Please try again later",
+                icon: "error",
+            });
+            dispatch({
+                type: BOOK_ADD_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
+        });
+        // }, 4000);
 
     }
     catch (error) {
